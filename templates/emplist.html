@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<a href="/empadd"><i style="font-size:25px" class="fas fa-user-plus"></i></a>
+<div class="table-responsive" style="margin-top:10px;">
+    <table class="table table-striped table-sm">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+              {% for id, employee in the_employees['records'].items() %}
+                <tr>
+                    <td>{{employee['id'] }}</td>
+                    <td>{{employee['name'] }}</td>
+                    <td>{{employee['last_name'] }}</td>
+                    <td>{{employee['email'] }}</td>
+                    <td>{{employee['phone'] }}</td>
+                    <td>{{employee['role'] }}</td>
+                    <td>
+                      <form>
+                        <button type="submit" class="btn btn-primary" value={{employee['id']}} name="employee_id" formaction="/empdetails/{{employee['id']}}"/><i class="fas fa-pencil-alt"></i></button>
+                        <button type="submit" class="btn btn-success" value={{employee['id'] }} name="employee_id" formaction="/scheduleinfo/{{employee['id']}}"/><i class="far fa-calendar-alt"></i></button>
+                      </form>
+                    </td>
+
+                </tr>
+              {% endfor %}
+        </tbody>
+    </table>
+    {{logger}}
+</div>
+{% endblock %}

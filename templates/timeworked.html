@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<form action='/timeworked' method="POST">
+  <div class="form-group">
+    <input type="text" name="daterange"/>
+    <button class="btn btn-success" type="submit">Get Schedules</button>
+  </div>
+</form>
+
+<script>
+$(function() {
+  $('input[name="daterange"]').daterangepicker({
+    opens: 'left',
+    "showWeekNumbers": true,
+    "maxSpan": {
+        "days": 6
+    },
+    "alwaysShowCalendars": true,
+    "startDate": {{prior_date}},
+    "endDate": {{current_date}}
+  }, function(start, end, label) {
+  console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
+  });
+});
+</script>
+
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr style="margin-top:0px;">
+                <th>Employee</th>
+                <th>Role</th>
+                <th>Hourly Wage</th>
+                <th>Hours Worked</th>
+                <th>Total Payroll</th>
+                {%for m in range(start_month, (end_month + 1) ) %}
+                  {%for d in range (start_day, (end_day+1) ) %}
+                  <th>{{start_month_abbr}}<br/>{{d}}</th>
+                  {% endfor %}
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {%for employees, employee in time_worked_all['employees'].items() %}
+                <tr>
+                    <td>{{ employee['full_name'] }}</td>
+                    <td>{{employee['role']}}</td>
+                    <td>${{employee['hourly_wage']}}/h</td>
+                    <td>{{employee['total_hours_worked']}}</td>
+                    <td>${{employee['total_payroll']}}</td>
+                    {%for year, month in employee['time_worked'].items() %}
+                        {%for workedhours, day in month.items() %}
+                          {%for time, data in day.items() %}
+                            <td>{{data['hours_worked']}}h</td>
+                          {% endfor %}
+                        {% endfor %}
+                    {% endfor %}
+                  </tr>
+          {% endfor %}
+        </tbody>
+
+    </table>
+    {{err}}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Untitled</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/Navigation-with-Button.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body style="padding:5px;">
+    <div class="container">
+        <nav class="navbar navbar-light navbar-expand-md navigation-clean-button">
+            <a class="navbar-brand" href="/emplist">Employr</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse"
+                    id="navcol-1">
+                    <ul class="nav navbar-nav mr-auto">
+                        <li class="nav-item" role="presentation"><a class="nav-link active" href="/emplist">Employees</a></li>
+                        <li class="nav-item" role="presentation"><a class="nav-link" href="/schedulesall">Schedules</a></li>
+                        <li class="nav-item" role="presentation"><a class="nav-link" href="/timeworked">Time Worked</a></li>
+                    </ul><span class="navbar-text actions"> <a href="#" class="login">Log In</a><a class="btn btn-light action-button" role="button" href="#">Sign Up</a></span></div>
+
+        </nav><a href="/empadd">+Add Employee</a>
+        <div class="table-responsive" style="margin-top:10px;">
+            <table class="table table-striped table-sm">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Role</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Jonathan</td>
+                        <td>Wilkinson</td>
+                        <td>jwilki@zbigg.com<br></td>
+                        <td>98753215646<br></td>
+                        <td>Owner</td>
+                        <td><a href="#"></a><a href="#"></a><a class="btn btn-success disabled" role="button" href="/empdetails">Details</a><a class="btn btn-info active" role="button" href="/scheduleinfo" style="margin-left:5px;">Schedule</a></td>
+                    </tr>
+                    <tr></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<form action="/emplist">
+        <h2>Personal Details for {{emp['name']}} {{emp.last_name}}</h2>
+        <div class="form-group" >
+
+        <label for="name">Name:</label>
+        <input type="text" class="form-control" id="name" value={{emp.name}} name="first_name"/>
+
+        </div>
+
+        <div class="form-group" >
+        <label for="last_name">Last Name:</label>
+        <input type="text" class="form-control" id="last_name" value={{emp.last_name}} name="last_name" />
+        </div>
+
+         <div class="form-group" >
+        <label for="email">Email:</label>
+        <input type="email" class="form-control" id="email" value={{emp.email}} name="email" />
+
+        <label for="phone">Phone:</label>
+        <input type="number" class="form-control" id="phone" value={{emp.phone}} name="phone" />
+        </div>
+        <div class="form-group">
+            <label for="role">Role</label>
+            {% set roles = ['Employee', 'Manager', 'Owner', 'IT Technician', 'Driver'] %}
+              <select class="form-control" id="role" name="role">
+                {% for role in roles %}
+                      <option {{ 'selected' if emp.role == role }} name="role">{{role}}</option>
+                {% endfor %}
+              </select>
+
+        </div>
+        <button class="btn btn-default" type="submit">Cancel</button>
+        <button class="btn btn-success" type="submit" formmethod="POST" value={{emp.id}} name="employee_id" formaction="/emplist">Update <i class="fas fa-user-check"></i></button>
+    </form>
+
+
+{% endblock %}

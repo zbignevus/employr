@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<h2>Add a new schedule for {{emp.name}} {{emp.last_name}}</h2>
+<form action="/scheduleinfo/{{emp.id}}" method="POST">
+    <div class="form-group">
+      <label for="date">Select a date:&nbsp;</label>
+      <input class="form-control" type="date" name="date">
+    </div>
+
+    <div class="form-group d-inline">
+      <label style="margin-right:5px;">Select Start Time:</label>
+      <select class="form-control d-inline-flex" style="width:80px;" name="start_hours" >
+        <optgroup label="Hours">
+          {% for i in range(0,24) %}
+            <option value={{i}}>{{i}}</option>
+          {% endfor %}
+        </optgroup>
+      </select>
+        <select class="form-control d-inline-flex" style="width:80px;" name="start_minutes">
+            <optgroup label="Minutes">
+              {% for i in range(0,60) %}
+                <option value={{i}}>{{i}}</option>
+              {% endfor %}
+            </optgroup>
+        </select>
+    </div>
+    <div class="form-group"><label style="margin-right:5px;">Select 1 Break Start:</label>
+      <select class="form-control d-inline-flex" style="width:80px;" name="1break_start_hours">
+        <optgroup label="Hours">
+          {% for i in range(0,24) %}
+            <option value={{i}}>{{i}}</option>
+          {% endfor %}
+        </optgroup>
+      </select>
+        <select class="form-control d-inline-flex" style="width:80px;" name="1break_start_minutes">
+            <optgroup label="Minutes">
+              {% for i in range(0,60) %}
+                <option value={{i}}>{{i}}</option>
+              {% endfor %}
+            </optgroup>
+            </select>
+    </div>
+    <div class="form-group">
+      <label style="margin-right:5px;">Select 1 Break End:</label>
+      <select class="form-control d-inline-flex" style="width:80px;" name="1break_end_hours" >
+        <optgroup label="Hours">
+          {% for i in range(0,24) %}
+            <option value={{i}}>{{i}}</option>
+          {% endfor %}
+        </optgroup>
+      </select>
+        <select class="form-control d-inline-flex" style="width:80px;" name="1break_end_minutes">
+            <optgroup label="Minutes">
+                <  {% for i in range(0,60) %}
+                    <option value={{i}}>{{i}}</option>
+                  {% endfor %}
+            </optgroup>
+            </select>
+    </div>
+    <div class="form-group">
+      <label style="margin-right:5px;">Select Lunch Start:</label>
+      <select class="form-control d-inline-flex" style="width:80px;" name="lunch_start_hours">
+        <optgroup label="Hours">
+          {% for i in range(0,24) %}
+            <option value={{i}}>{{i}}</option>
+          {% endfor %}
+        </optgroup>
+      </select>
+        <select class="form-control d-inline-flex" style="width:80px;"  name="lunch_start_minutes">
+            <optgroup label="Minutes">
+                <  {% for i in range(0,60) %}
+                    <option value={{i}}>{{i}}</option>
+                  {% endfor %}
+            </optgroup>
+            </select>
+    </div>
+    <div class="form-group">
+      <label style="margin-right:5px;">Select Lunch End:</label>
+      <select class="form-control d-inline-flex" style="width:80px;"  name="lunch_end_hours">
+        <optgroup label="Hours">
+          {% for i in range(0,24) %}
+            <option value={{i}}>{{i}}</option>
+          {% endfor %}
+        </optgroup>
+      </select>
+        <select
+            class="form-control d-inline-flex" style="width:80px;"  name="lunch_end_minutes">
+            <optgroup label="Minutes">
+              {% for i in range(0,60) %}
+                <option value={{i}}>{{i}}</option>
+              {% endfor %}
+            </optgroup>
+            </select>
+    </div>
+    <div class="form-group">
+      <label style="margin-right:5px;">Select 3 Break Start:</label>
+      <select class="form-control d-inline-flex" style="width:80px;"  name="2break_start_hours">
+        <optgroup label="Hours">
+          {% for i in range(0,24) %}
+            <option value={{i}}>{{i}}</option>
+          {% endfor %}
+        </optgroup>
+      </select>
+        <select
+            class="form-control d-inline-flex" style="width:80px;"  name="2break_start_minutes">
+            <optgroup label="Minutes">
+              {% for i in range(0,60) %}
+                <option value={{i}}>{{i}}</option>
+              {% endfor %}
+            </optgroup>
+            </select>
+    </div>
+    <div class="form-group">
+      <label style="margin-right:5px;">Select 3 Break End:</label>
+      <select class="form-control d-inline-flex" style="width:80px;"  name="2break_end_hours">
+        <optgroup label="Hours">
+          {% for i in range(0,24) %}
+            <option value={{i}}>{{i}}</option>
+          {% endfor %}
+        </optgroup>
+      </select>
+        <select
+            class="form-control d-inline-flex" style="width:80px;"  name="2break_end_minutes">
+            <optgroup label="Minutes">
+              {% for i in range(0,60) %}
+                <option value={{i}}>{{i}}</option>
+              {% endfor %}
+            </optgroup>
+            </select>
+    </div>
+    <div class="form-group">
+      <label style="margin-right:5px;">Select Finish:</label>
+      <select class="form-control d-inline-flex" style="width:80px;"  name="finish_hours">
+        <optgroup label="Hours">
+          {% for i in range(0,24) %}
+            <option value={{i}}>{{i}}</option>
+          {% endfor %}
+        </optgroup>
+      </select>
+        <select class="form-control d-inline-flex" style="width:80px;"  name="finish_minutes">
+            <optgroup label="Minutes">
+              {% for i in range(0,60) %}
+                <option value={{i}}>{{i}}</option>
+              {% endfor %}
+            </optgroup>
+            </select>
+    </div>
+    <div class="btn-group" role="group">
+      <a class="btn btn-warning" role="button" style="margin-right:5px;">Cancel</a>
+      <button class="btn btn-success" type="submit">Submit</button>
+    </div>
+</form>
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+{% endblock %}

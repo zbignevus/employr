@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{%block body %}
+
+<form method="POST" action="/schedulesall">
+    <div class="form-group">
+      <label for="date" style="margin-right:5px;">Select a schedule date:</label>
+      <input class="form-control form-control-sm" type="date" name="date" value={{datenow}} required/>
+      <button class="btn btn-success btn-sm" type="submit">View Schedules</button>
+    </div>
+</form>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Employee</th>
+                <th>Start</th>
+                <th>1 Break</th>
+                <th>Lunch</th>
+                <th>2 Break</th>
+                <th>Finish</th>
+            </tr>
+        </thead>
+        <tbody>
+          {% for year, months in schedules_all.items() %}
+            {% for month, days in months.items() %}
+              {% for day, employees in days.items() %}
+                {% for employee, schedule in employees.items() %}
+                  <tr>
+                      <td>{{employee}}</td>
+                      <td>{{ "{:02}".format(schedule['start_hours']) }}:{{ "{:02}".format(schedule['start_minutes']) }}h</td>
+                      <td>{{ "{:02}".format(schedule['1break_start_hours']) }}:{{"{:02}".format(schedule['1break_start_minutes']) }}h - {{ "{:02}".format(schedule['1break_end_hours']) }}:{{ "{:02}".format(schedule['1break_end_minutes']) }}h</td>
+                      <td>{{ "{:02}".format(schedule['lunch_start_hours']) }}:{{ "{:02}".format(schedule['lunch_start_minutes']) }}h - {{ "{:02}".format(schedule['lunch_end_hours'])}}:{{ "{:02}".format(schedule['lunch_end_minutes']) }}h </td>
+                      <td>{{ "{:02}".format(schedule['2break_start_hours']) }}:{{ "{:02}".format(schedule['2break_start_minutes']) }}h - {{ "{:02}".format(schedule['2break_end_hours']) }}:{{ "{:02}".format(schedule['2break_end_minutes']) }}h</td>
+                      <td>{{ "{:02}".format(schedule['finish_hours']) }}:{{ "{:02}".format(schedule['finish_minutes']) }}h</td>
+                  </tr>
+                {% endfor %}
+              {% endfor %}
+            {% endfor %}
+          {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

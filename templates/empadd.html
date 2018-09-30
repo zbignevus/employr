@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<form action="/emplistadd" method="POST">
+    <div class="form-group"><label for="first_name">First Name:</label><input class="form-control form-control-sm" type="text" name="first_name" required=""></div>
+    <div class="form-group"><label for="last_name">Last Name:</label><input class="form-control form-control-sm" type="text" name="last_name" required=""></div>
+    <div class="form-group"><label for="email">Email:</label><input class="form-control form-control-sm" type="text" name="email" required=""></div>
+    <div class="form-group"><label for="phone">Phone:</label><input class="form-control form-control-sm" type="text" name="phone"></div>
+    <div class="form-group"><label for="username"><span style="text-decoration: underline;">Username:</span></label><input class="form-control form-control-sm" type="text" name="username"></div>
+    <div class="form-group"><label for="password"><span style="text-decoration: underline;">Password:</span></label><input class="form-control form-control-sm" type="text" name="password"></div>
+    <div class="form-group"><label>Select Role:</label>
+      <select name="role" class="form-control">
+        <optgroup label="Select Role">
+          <option value="Owner" selected="" >Owner</option>
+          <option value="Manager">Manager</option>
+          <option value="Employee" >Employee</option>
+          <option value="Driver">Driver</option>
+          <option value="Accountant">Accountant</option>
+        </optgroup>
+      </select>
+    </div>
+<button class="btn btn-success" type="SUBMIT"/><i style="font-size:25px" class="fas fa-user-check"></i>Add Employee</button>
+</form>
+
+
+
+{% endblock %}
