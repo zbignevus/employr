@@ -35,7 +35,7 @@ $(function() {
                 <th>Hourly Wage</th>
                 <th>Hours Worked</th>
                 <th>Total Payroll</th>
-                {%for m in range(start_month, (end_month + 1) ) %}
+                {%for m in range(start_month, (end_month+1) ) %}
                   {%for d in range (start_day, (end_day+1) ) %}
                   <th>{{start_month_abbr}}<br/>{{d}}</th>
                   {% endfor %}
