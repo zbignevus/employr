@@ -14,3 +14,4 @@ a) The quick schedule tool on the top of the page allows to quickly add new sche
 6. To calculate the payroll for employees based on hours worked in a given range, press the "calendar with a checkmark" icon on the top of the page. Please keep in mind that the current prototype has the hours worked hardcoded in the schedules.py file under each employee's day schedules. 
 
 
+If you have any further usage questions regarding the current prototype, please contact me at zbignevus@gmail.com
