@@ -1,6 +1,6 @@
-Employr (working title)
+<h1>Employr (working title)</h1>
 
-This is an prototype of a project I am working on, which is an employee payroll application written in Python 3. Please be aware that it is still lacking authentication, many forms are missing type validations and the database is still not pushed to SQL, so at least make sure to provide strictly integers in the schedules hours/minutes.
+This is a prototype of a project I am working on, which is an employee payroll application written in Python 3. Please be aware that it is still lacking authentication, many forms are missing type validations and the database is still not pushed to SQL, so at least make sure to provide strictly integers in the schedules hours/minutes.
 
 Usage instructions:
 
