@@ -15,3 +15,9 @@ a) The quick schedule tool on the top of the page allows to quickly add new sche
 
 
 If you have any further usage questions regarding the current prototype, please contact me at zbignevus@gmail.com
+
+
+Recent changes:
+
+2018.10.05
+*Hourly wages can now be dynamically assigned to each employee
