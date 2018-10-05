@@ -33,6 +33,11 @@
               </select>
 
         </div>
+        <div class="form-group">
+          <label for='hourly_wage'>Hourly Wage</label>
+          <input type="text" class='form-control' value={{hourly_wage}} placeholder="set hourly wage here" name="hourly_wage" id="hourly_wage" required />
+        </div>
+
         <button class="btn btn-default" type="submit">Cancel</button>
         <button class="btn btn-success" type="submit" formmethod="POST" value={{emp.id}} name="employee_id" formaction="/emplist">Update <i class="fas fa-user-check"></i></button>
     </form>

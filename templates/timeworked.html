@@ -35,7 +35,7 @@ $(function() {
                 <th>Hourly Wage</th>
                 <th>Hours Worked</th>
                 <th>Total Payroll</th>
-                {%for m in range(start_month, (end_month+1) ) %}
+                {%for m in range(start_month, (end_month + 1) ) %}
                   {%for d in range (start_day, (end_day+1) ) %}
                   <th>{{start_month_abbr}}<br/>{{d}}</th>
                   {% endfor %}
@@ -67,3 +67,52 @@ $(function() {
 </div>
 
 {% endblock %}
+
+<!--
+
+create loop for th
+have month converted to day through datetime
+add start_day and end_day as range
+
+<th>Aug 6</th>
+<th>Aug 7</th>
+<th>Aug 8</th>
+<th>Aug 9</th>
+<th>Aug 10</th>
+<th>Aug 11</th>
+<th>Aug 12</th>
+
+time_worked_all['employees'].update(
+                  {
+                      employee_id:{
+                          'full_name': full_name,
+                          'role': role,
+                          'hourly_wage': hourly_wage,
+                          'time_worked':{
+                                      y:{
+                                          m:{
+                                              d:{
+                                                  'hours_worked': schedules['employees'][employee_id][y][m][d]['hours_worked'],
+
+                                              }
+                                          }
+                                      }
+                          },
+                          #need to create a variable to include hours_worked for all days
+                          'payroll': schedules['employees'][employee_id][y][m][d]['hours_worked'] * hourly_wage
+                      }
+                  }
+                  )
+
+
+
+
+-->
+
+<!--
+  <div class="form-group">
+    <label>Select a Date:</label>
+    <input class="form-control" type="date" name="date" value={{datenow}}>
+    <button type="submit" class="btn btn-success btn-sm">View Payroll</button>
+  </div>
+-->

@@ -1,0 +1,52 @@
+
+        '''
+EMPLOYEE DETAILS
+
+  *Final Build
+    1. Have hourly wage dynamically set for each employee under employee details
+
+TIMEWORKED
+
+        MINIMUM PLAN
+
+        *Early Build
+
+        1. Add default calendar values (complete)
+        2. Employees and their roles are loaded dynamically (complete)
+        3. push hourly wage value to controller(complete)
+        4. push time worked value to controller (complete)
+        5. Create payroll function (complete)
+
+        Each employee will have a payroll added in the controller first, and
+        I will simulate a scenario where a day selected would display the total payroll for each employee listed
+
+        *Advanced Build (complete)
+        1. obtain day from date request form (complete)
+        2. Create a date range to pick from (max 7 days with weeks marked) (complete)
+        3. Populate the missing day fields with days from range (complete)
+        4. Calculate payroll based on range (complete)
+        5. push hourly wage value to model (complete)
+        6. push time worked value to model (complete)
+
+
+SCHEDULE INFO
+      * Early Build
+      1. Employees' schedules are listed (complete)
+      2. Ability to add a schedule through new schedule button (complete)
+      3. Ability to update an existing schedule through new schedule button (complete)
+      4. Test out against bugs with empty schedule update requests (complete)
+
+      * Advanced Build
+      1. Schedule knows how many days in month (complete)
+      2. Quick Schedule section on the page that allows to create and update (complete)
+      3. Bulk schedule create through quick schedule possible (complete)
+
+      *Final Build
+      1. Schedule Info allows to input hours worked in a schedule
+      2. hours worked may be inputted without submit button through Ajax
+      3. Days sort themselves out by number
+
+
+SQL
+    1. Create SQL database
+    2. Push model to SQL

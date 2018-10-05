@@ -15,6 +15,7 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/emplist',  methods=["GET","POST"])
 def emp_list_get() -> str:
+    #ID will be added from sql, once it is connected to the project.
 
     #check to see whether this is an update or insert request (from empdetails or empadd)
 
@@ -29,7 +30,7 @@ def emp_list_get() -> str:
                 'role': request.form['role']
             }
         )
-
+        hourly_wages[emp_id] = int(request.form['hourly_wage'])
 
     return render_template(
                             "emplist.html",
@@ -60,6 +61,7 @@ def emp_list_add() -> str:
                     }
                 }
             )
+        hourly_wages[i] = int(request.form['hourly_wage'])
 
     return render_template("emplist.html", the_employees=employees)
 
@@ -71,16 +73,22 @@ def emp_add() ->str:
 @app.route('/empdetails/<id>')
 def emp_details(id) -> str:
 
+    #assign id parameter to emp_id variable
     emp_id =  int(id)
+    #from employees records table get object with id that equals emp_id variable
     sel_employee = employees['records'][emp_id]
 
-    return render_template("empdetails.html", emp = sel_employee)
+    hourly_wage = hourly_wages[emp_id]
+
+
+    return render_template("empdetails.html", emp = sel_employee, hourly_wage=hourly_wage)
     #"This is the employee details page, accessible when clicking the
     #details button on the emp entry. It may also list employee's working hours."
 
 
 @app.route('/scheduleinfo/<id>', methods=["GET", "POST"])
 def schedule_info(id) -> str:
+    #consider using object.setdefault("key", "value")
 
     #GET EMPLOYEE BY ID
     emp_id = int(id)
@@ -235,6 +243,7 @@ def schedule_new(id) -> str:
         emp = sel_employee
     )
 
+#add import csv functionality for mass schedule import?
 
 @app.route('/schedulesall', methods=["GET", "POST"])
 def show_time_worked_all() -> str:
@@ -248,7 +257,7 @@ def show_time_worked_all() -> str:
     }
 
     #IF request method is "GET"
-    #GET Schedules FROM all employees where date equals request
+    #GET Schedules FROM all employees where date equals request (COMPREHENSION?)
     if request.method == "POST":
         if "date" in request.form:
 
