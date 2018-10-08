@@ -30,7 +30,6 @@ Schedule Info:
   *Improved logic to allow both time worked and quick schedule variables to operate on same POST method.
  </i>
 
-<br/>
 2018.10.05
 
 Employee Details:
