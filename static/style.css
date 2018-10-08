@@ -14,3 +14,9 @@ font: inherit;
 cursor: pointer;
 outline: inherit;
 }
+.table-condensed{
+border: 0px;
+  padding:0;
+  margin:0;
+  border-collapse: collapse;
+}

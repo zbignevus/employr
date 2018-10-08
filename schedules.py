@@ -144,3 +144,23 @@ schedules = {
             }
         }
 }
+
+#month generator
+schedmonth = {}
+for i in range(1,31):
+    schedmonth.update(
+     {
+        i:
+            {
+            "day":i,
+            "start": "08:00h",
+            "1break_start": "09:30h",
+            "1break_end": "09:45h",
+            "lunch_start": "11:30h",
+            "lunch_end": "12:00h",
+            "2break_start": "14:00h",
+            "2break_end": "14:15h",
+            "finish": "16:30h"
+            },
+        }
+    )

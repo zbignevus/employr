@@ -33,84 +33,93 @@
 <p></p>
 <a href="/schedulenew/{{emp.id}}">+Add/Edit a Schedule</a>
 
-<div class="table-responsive">
-    <table class="table table-striped table-sm">
-        <thead>
-            <tr>
-                <th>Day</th>
-                <th>Start</th>
-                <th>1 Break</th>
-                <th>2 Break</th>
-                <th>3 Break</th>
-                <th>Finish</th>
-                <th colspan="3">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-              <td><input type="hidden" value={{sel_month}} name="selmonth"/>
-                          <input type="text" name="day" style='width:100%' placeholder="Day"/>
-              </td>
-              <td><input type="text" name="start_hours" style='width:40%' placeholder="Hrs"/>
+  <div class="table-responsive">
+      <table class="table table-striped table-bordered table-sm">
+          <thead style="text-align:center">
+              <tr>
+                  <th>Day</th>
+                  <th>Start</th>
+                  <th>1 Break</th>
+                  <th>2 Break</th>
+                  <th>3 Break</th>
+                  <th>Finish</th>
+                  <th>Hours Worked</th>
+                  <th colspan="2">Actions</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                <td><input type="hidden" value={{sel_month}} name="selmonth"/>
+                            <input type="text" name="day" style='width:100%' placeholder="Day"/>
+                </td>
+                <td><input type="text" name="start_hours" style='width:40%' placeholder="Hrs"/>
+                    :
+                    <input type="text" name="start_minutes" style='width:40%' placeholder="Min"/>
+                </td>
+                <td>
+                  <input type="text" name="1break_start_hours"  style='width:20%' placeholder="Hrs"/>:
+                  <input type="text" name="1break_start_minutes" style='width:20%' placeholder="Min"/>
+                  -
+                  <input type="text" name="1break_end_hours" style='width:20%' placeholder="Hrs"/>:
+                  <input type="text" name="1break_end_minutes" style='width:20%' placeholder="Min"/>
+                </td>
+                <td>
+                  <input type="text" name="lunch_start_hours" style='width:20%' placeholder="Hrs"/>:
+                  <input type="text" name="lunch_start_minutes" style='width:20%' placeholder="Min"/>
+                  -
+                  <input type="text" name="lunch_end_hours" style='width:20%' placeholder="Hrs"/>:
+                  <input type="text" name="lunch_end_minutes" style='width:20%' placeholder="Min"/>
+                </td>
+                <td>
+                  <input type="text" name="2break_start_hours" style='width:20%' placeholder="Hrs"/>:
+                  <input type="text" name="2break_start_minutes" style='width:20%' placeholder="Min"/>
+                  -
+                  <input type="text" name="2break_end_hours" style='width:20%' placeholder="Hrs"/>:
+                  <input type="text" name="2break_end_minutes" style='width:20%' placeholder="Min"/>
+                </td>
+                <td>
+                  <input type="text" name="finish_hours" style='width:40%' placeholder="Hrs"/>
                   :
-                  <input type="text" name="start_minutes" style='width:40%' placeholder="Min"/>
-              </td>
-              <td>
-                <input type="text" name="1break_start_hours"  style='width:20%' placeholder="Hrs"/>:
-                <input type="text" name="1break_start_minutes" style='width:20%' placeholder="Min"/>
-                -
-                <input type="text" name="1break_end_hours" style='width:20%' placeholder="Hrs"/>:
-                <input type="text" name="1break_end_minutes" style='width:20%' placeholder="Min"/>
-              </td>
-              <td>
-                <input type="text" name="lunch_start_hours" style='width:20%' placeholder="Hrs"/>:
-                <input type="text" name="lunch_start_minutes" style='width:20%' placeholder="Min"/>
-                -
-                <input type="text" name="lunch_end_hours" style='width:20%' placeholder="Hrs"/>:
-                <input type="text" name="lunch_end_minutes" style='width:20%' placeholder="Min"/>
-              </td>
-              <td>
-                <input type="text" name="2break_start_hours" style='width:20%' placeholder="Hrs"/>:
-                <input type="text" name="2break_start_minutes" style='width:20%' placeholder="Min"/>
-                -
-                <input type="text" name="2break_end_hours" style='width:20%' placeholder="Hrs"/>:
-                <input type="text" name="2break_end_minutes" style='width:20%' placeholder="Min"/>
-              </td>
-              <td>
-                <input type="text" name="finish_hours" style='width:40%' placeholder="Hrs"/>
-                :
-                <input type="text" name="finish_minutes" style='width:40%' placeholder="Min"/>
+                  <input type="text" name="finish_minutes" style='width:40%' placeholder="Min"/>
 
-              </td>
-              <td>
-                <label class="control-label" for="bulkdays"> Apply until day:
-                <select name='bulk_days'>
-                  {% for i in range(1, month_len) %}
-                    <option name="bulk_day" value={{i}} >{{i}}</option>
-                  {% endfor %}
-                </select>
-              </td>
-              <td>
-                <button class="btn btn-success" type="submit" style="height:30px" action='/scheduleinfo/{{emp.id}}' formmethod="POST">Add <i style="font-size:20px;color:white" class="far fa-calendar-plus"></i></button>
-              </td>
+                </td>
+                <td></td>
+                <td>
+                  <label class="control-label" for="bulkdays"> Apply until day:
+                  <select name='bulk_days'>
+                    {% for i in range(1, month_len) %}
+                      <option name="bulk_day" value={{i}} >{{i}}</option>
+                    {% endfor %}
+                  </select>
+                </td>
+                <td>
+                  <button class="btn btn-success" type="submit" style="height:30px" action='/scheduleinfo/{{emp.id}}' formmethod="POST">Add <i style="font-size:20px;color:white" class="far fa-calendar-plus"></i></button>
+                </td>
 
-</form>
-          </tr>
-          {% for day, schedule in sched.items() %}
-            <tr>
-              <td>{{ day }}</td>
-              <td>{{ "{:02}".format(schedule['start_hours']) }}:{{ "{:02}".format(schedule['start_minutes']) }}</td>
-              <td>{{ "{:02}".format(schedule['1break_start_hours']) }}:{{"{:02}".format(schedule['1break_start_minutes']) }}h - {{ "{:02}".format(schedule['1break_end_hours']) }}:{{ "{:02}".format(schedule['1break_end_minutes']) }}h</td>
-              <td>{{ "{:02}".format(schedule['lunch_start_hours']) }}:{{ "{:02}".format(schedule['lunch_start_minutes']) }}h - {{ "{:02}".format(schedule['lunch_end_hours'])}}:{{ "{:02}".format(schedule['lunch_end_minutes']) }}h </td>
-              <td>{{ "{:02}".format(schedule['2break_start_hours']) }}:{{ "{:02}".format(schedule['2break_start_minutes']) }}h - {{ "{:02}".format(schedule['2break_end_hours']) }}:{{ "{:02}".format(schedule['2break_end_minutes']) }}h</td>
-              <td>{{ "{:02}".format(schedule['finish_hours']) }}:{{ "{:02}".format(schedule['finish_minutes']) }}h</td>
-              <td></td>
+
             </tr>
-          {% endfor %}
-        </tbody>
-    </table>
-</div>
-
+            {% for day, schedule in sched.items() %}
+              <tr>
+                <td>{{ day }}</td>
+                <td>{{ "{:02}".format(schedule['start_hours']) }}:{{ "{:02}".format(schedule['start_minutes']) }}</td>
+                <td>{{ "{:02}".format(schedule['1break_start_hours']) }}:{{"{:02}".format(schedule['1break_start_minutes']) }}h - {{ "{:02}".format(schedule['1break_end_hours']) }}:{{ "{:02}".format(schedule['1break_end_minutes']) }}h</td>
+                <td>{{ "{:02}".format(schedule['lunch_start_hours']) }}:{{ "{:02}".format(schedule['lunch_start_minutes']) }}h - {{ "{:02}".format(schedule['lunch_end_hours'])}}:{{ "{:02}".format(schedule['lunch_end_minutes']) }}h </td>
+                <td>{{ "{:02}".format(schedule['2break_start_hours']) }}:{{ "{:02}".format(schedule['2break_start_minutes']) }}h - {{ "{:02}".format(schedule['2break_end_hours']) }}:{{ "{:02}".format(schedule['2break_end_minutes']) }}h</td>
+                <td>{{ "{:02}".format(schedule['finish_hours']) }}:{{ "{:02}".format(schedule['finish_minutes']) }}h</td>
+                <td>
+                  <div style="white-space:nowrap">
+                    <input type="text" name="hours_worked_{{day}}" id="hours_worked_{{day}}" value={{schedule['hours_worked']}} size=2/>
+                    <button class="btn btn-xs btn-success" action="/scheduleinfo/{{emp.id}}" formmethod="POST" value=hours_worked_{{day}} type="submit">
+                      <i class="fas fa-check"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+      </table>
+  </div>
+</form>
 {{logger}}
 {% endblock %}
 
