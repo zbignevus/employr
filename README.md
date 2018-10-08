@@ -2,7 +2,7 @@
 
 This is a prototype of a project I am working on, which is an employee payroll application written in Python 3. Please be aware that it is still lacking authentication, many forms are missing type validations and the database is still not pushed to SQL, so at least make sure to provide strictly integers in the schedules hours/minutes.
 
-Usage instructions:
+<b>Usage instructions:</b>
 
 1. Download and run the app.py with Python 3.
 2. Open the Title page - this page contains the employee list, each entry containing name, last name, email and role and links to additional details and their schedule information.
@@ -18,15 +18,17 @@ a) The quick schedule tool on the top of the page allows to quickly add new sche
 If you have any further usage questions regarding the current prototype, please contact me at zbignevus@gmail.com
 
 
-Recent changes:
+<b>Recent changes:</b>
 
 2018.10.09
 Schedule Info:
-  *Fixed error when clicking "Add Schedule" in the quick schedule tool.
+  <i>*Fixed error when clicking "Add Schedule" in the quick schedule tool.
   *Added Time Worked Window - this is where you can view and specify the hours an employee has worked.
   *Improved logic to allow both time worked and quick schedule variables to operate on same POST method.
+</i>
 
 2018.10.05
 Employee Details:
-  *Hourly wages can now be dynamically assigned to each employee
+  <i>*Hourly wages can now be dynamically assigned to each employee
+  </i>
 
