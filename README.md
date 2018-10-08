@@ -8,10 +8,11 @@ Usage instructions:
 2. Open the Title page - this page contains the employee list, each entry containing name, last name, email and role and links to additional details and their schedule information.
 3. Press the pencil icon under the actions column to access the employee details page, which also allows to modify the current employee information, including the role they have and their current hourly wage.
 4. Press the calendar icon under the actions column to access the employee schedule information.
-a) The quick schedule tool on the top of the page allows to quickly add new schedules for an employee. Input the day in the selected month and specify the times (start - end) as per the column description. Finally, you can bulk copy the schedule by selecting which days to apply this to from the specified day under "Apply until day" dropdown (bulk copy overrides existing schedule if it existed in specified range).
-5. To view schedules assigned for a specified day for all employees, Press the "person with clock" icon on the top of the page.
+a) The quick schedule tool on the top of the page allows to quickly add new schedules for an employee. Input the day in the selected month and specify the times (start - end) as per each column description. Finally, you can bulk copy the schedule by selecting which days to apply this to from the specified day under "Apply until day" dropdown (bulk copy overrides existing schedule if it existed in the specified range).
+5. You may view and edit the hours worked at a specified day under the "hours worked" column.
+6. To view schedules assigned for a specified day for all employees, Press the "person with clock" icon on the top of the page.
 
-6. To calculate the payroll for employees based on hours worked in a given range, press the "calendar with a checkmark" icon on the top of the page. Please keep in mind that the current prototype has the hours worked hardcoded in the schedules.py file for month of september and october 2018 under each employee's day schedules. 
+7. To calculate the payroll for employees based on hours worked in a given range, press the "calendar with a checkmark" icon on the top of the page.
 
 
 If you have any further usage questions regarding the current prototype, please contact me at zbignevus@gmail.com
@@ -19,5 +20,13 @@ If you have any further usage questions regarding the current prototype, please 
 
 Recent changes:
 
+2018.10.09
+Schedule Info:
+  *Fixed error when clicking "Add Schedule" in the quick schedule tool.
+  *Added Time Worked Window - this is where you can view and specify the hours an employee has worked.
+  *Improved logic to allow both time worked and quick schedule variables to operate on same POST method.
+
 2018.10.05
-*Hourly wages can now be dynamically assigned to each employee
+Employee Details:
+  *Hourly wages can now be dynamically assigned to each employee
+
