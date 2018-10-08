@@ -22,10 +22,11 @@ If you have any further usage questions regarding the current prototype, please 
 
 2018.10.09
 Schedule Info:
-  <i>*Fixed error when clicking "Add Schedule" in the quick schedule tool.
+  <i>
+  *Fixed error when clicking "Add Schedule" in the quick schedule tool.
   *Added Time Worked Window - this is where you can view and specify the hours an employee has worked.
   *Improved logic to allow both time worked and quick schedule variables to operate on same POST method.
-</i>
+ </i>
 
 2018.10.05
 Employee Details:
