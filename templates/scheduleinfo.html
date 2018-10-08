@@ -108,7 +108,7 @@
                 <td>{{ "{:02}".format(schedule['finish_hours']) }}:{{ "{:02}".format(schedule['finish_minutes']) }}h</td>
                 <td>
                   <div style="white-space:nowrap">
-                    <input type="text" name="hours_worked_{{day}}" id="hours_worked_{{day}}" value={{schedule['hours_worked']}} size=2/>
+                    <input type="text" name="hours_worked_{{day}}" id="hours_worked_{{day}}" value="{{schedule['hours_worked']}}" size=2/>
                     <button class="btn btn-xs btn-success" action="/scheduleinfo/{{emp.id}}" formmethod="POST" value=hours_worked_{{day}} type="submit">
                       <i class="fas fa-check"></i>
                     </button>
