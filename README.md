@@ -21,6 +21,7 @@ If you have any further usage questions regarding the current prototype, please 
 <b>Recent changes:</b>
 
 2018.10.09
+
 Schedule Info:
   <i>
   *Fixed error when clicking "Add Schedule" in the quick schedule tool.
@@ -29,6 +30,7 @@ Schedule Info:
  </i>
 
 2018.10.05
+
 Employee Details:
   <i>*Hourly wages can now be dynamically assigned to each employee
   </i>
