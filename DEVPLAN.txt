@@ -80,3 +80,9 @@ SCHEDULE INFO
   *Clicking "add schedule" on quick schedule when form day not declared does not throw error anymore
   *Improved logic to allow both time worked and quick schedule to operate on same POST method
   !Hours worked throws error when opening with newly-created employee
+
+
+TIME WORKED
+  *There seems to be an error when inputting times worked in a schedule, where time_worked later expects to have hours_worked in days that don't Have
+  one, generating a key error. (fixed)
+  !Empty row for days that do not exist in schedule. Would rather have zeroes.

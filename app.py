@@ -151,18 +151,18 @@ def schedule_info(id) -> str:
             for i in range(begin, (end + 1)):
 
                 if sel_month in schedules['employees'][emp_id][sel_year]:
-
-                    if i in schedules['employees'][emp_id][sel_year][sel_month]: #CHECK if selecte day in month
-
-                        schedules['employees'][emp_id][sel_year][sel_month][i].update(schedule_update_day(i, request)) #UPDATE selected day with prepared request data
-
-                    elif i not in schedules['employees'][emp_id][sel_year][sel_month] and i: #IF selected day not in month and truthy
-
-                        schedules['employees'][emp_id][sel_year][sel_month].update({i:schedule_update_day(i, request)}) #UPDATE month with selected day containing prepared request data
-
-                elif sel_month not in schedules['employees'][emp_id][sel_year] and sel_month: #IF selected month not in schedule and truthy
-
-                    schedules['employees'][emp_id][sel_year].update({sel_month: { i: schedule_update_day(i, request) }}) #UPDATE year with selected month containing selected day with prepared request data
+                    #CHECK if selected day in month
+                    if i in schedules['employees'][emp_id][sel_year][sel_month]:
+                        #UPDATE selected day with prepared request data
+                        schedules['employees'][emp_id][sel_year][sel_month][i].update(schedule_update_day(i, request))
+                        #IF selected day not in month and truthy
+                    elif i not in schedules['employees'][emp_id][sel_year][sel_month] and i:
+                        #UPDATE month with selected day containing prepared request data
+                        schedules['employees'][emp_id][sel_year][sel_month].update({i:schedule_update_day(i, request)})
+                        #IF selected month not in schedule and truthy
+                elif sel_month not in schedules['employees'][emp_id][sel_year] and sel_month:
+                        #UPDATE year with selected month containing selected day with prepared request data
+                    schedules['employees'][emp_id][sel_year].update({sel_month: { i: schedule_update_day(i, request) }})
 
         #Display current month
         else:
@@ -404,20 +404,30 @@ def schedule_time_worked() -> str:
                         }
                     }
                 )
-                #STOPS WORKING HERE
+                #Generate time_worked_all based on data provided
+
+                #in the year range provided
                 for y in range(start_year, (end_year+1)):
+                    #if the employee iteration has this year iteration in schedules...
                     if y in schedules['employees'][employee_id]:
+                        #create this year in time_worked_all for this employee...
                         time_worked_all['employees'][employee_id]['time_worked'].update({y:{}})
+                        #for the month range provided...
                         for m in range(start_month, (end_month + 1) ):
+                            #if it month iteration is present in employee iteration's schedules for that year...
                             if m in schedules['employees'][employee_id][y]:
+                                #add this month iteration to the created year.
                                 time_worked_all['employees'][employee_id]['time_worked'][y].update({m:{}})
+                                #for the day range provided...
                                 for d in range(start_day, (end_day + 1)):
+                                    #if the day iteration is present in employee's iteration's schedules tree...
                                     if d in schedules['employees'][employee_id][y][m]:
+                                        #create the day iteration in time_worked_all and populate with data from before.
                                         time_worked_all['employees'][employee_id]['time_worked'][y][m].update(
                                             {
                                                 d:{
-                                                    'hours_worked':schedules['employees'][employee_id][y][m][d]['hours_worked'],
-                                                    'payroll': schedules['employees'][employee_id][y][m][d]['hours_worked'] * hourly_wage
+                                                    'hours_worked':schedules['employees'][employee_id][y][m][d].get('hours_worked', 0),
+                                                    'payroll': schedules['employees'][employee_id][y][m][d].get('hours_worked', 0) * hourly_wage
                                                 }
 
                                             }
