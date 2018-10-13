@@ -98,6 +98,7 @@ def schedule_info(id) -> str:
     current_year = now.year
     sel_year = current_year
     sel_month = current_month
+    month_len = monthrange(2018, sel_month)[1] + 1
     sel_schedule = {}
     sel_employee = employees['records'][emp_id]
     #INIT VARIABLES
@@ -108,102 +109,111 @@ def schedule_info(id) -> str:
     if request.method == "POST":
 
         #CHECK FOR 'date' VALUE IN REQUEST FORM
+        try:
 
-        if "date" in request.form:
+            if "date" in request.form:
 
-            #PROCESS 'date' VALUE THROUGH datetime
-            full_date_converted = datetime.datetime.strptime(request.form['date'], "%Y-%m-%d")
+                #PROCESS 'date' VALUE THROUGH datetime
+                full_date_converted = datetime.datetime.strptime(request.form['date'], "%Y-%m-%d")
 
-            #ASSIGN datetime VALUES TO VARIABLES
-            sel_year = full_date_converted.year
-            sel_month = full_date_converted.month
-            sel_day = full_date_converted.day
+                #ASSIGN datetime VALUES TO VARIABLES
+                sel_year = full_date_converted.year
+                sel_month = full_date_converted.month
+                sel_day = full_date_converted.day
 
-            #PREPARE REQUEST DATA FOR SELECTED DAY
-            updated_sched_data = schedule_update_day(sel_day, request)
+                #PREPARE REQUEST DATA FOR SELECTED DAY
+                updated_sched_data = schedule_update_day(sel_day, request)
 
-        #IF NO DATE IN REQUEST FORM
-        if "day" in request.form and request.form['day']:
+            #IF NO DATE IN REQUEST FORM
+            if "day" in request.form and request.form['day']  and int(request.form['day']) <= month_len and int(request.form['day']) >=1:
 
-            #GET 'month' & 'day' FROM REQUEST FORM
+                #GET 'month' & 'day' FROM REQUEST FORM
+                sel_month = int(request.form['selmonth'])
+                sel_day = int(request.form['day'])
+                updated_sched_data = schedule_update_day(sel_day, request)
+                #logger.append("day's value is {}".format(type(request.form['day'])))
+
+                if 'bulk_days' is not None and 'bulk_days' in request.form:
+
+                    bulk_days = int(request.form['bulk_days'])
+                else:
+
+                    bulk_days = sel_day
+
+                #COMPARE if selected day is larger than "apply to" bulk days
+                if bulk_days < sel_day:
+
+                    begin = bulk_days
+                    end = sel_day
+                #SET selected day to be end range if "apply to" bulk days is smaller
+                else:
+                    begin = sel_day
+                    end = bulk_days
+
+                for i in range(begin, (end + 1)):
+
+                    if sel_month in schedules['employees'][emp_id][sel_year]:
+                        #CHECK if selected day in month
+                        if i in schedules['employees'][emp_id][sel_year][sel_month]:
+                            #UPDATE selected day with prepared request data
+                            schedules['employees'][emp_id][sel_year][sel_month][i].update(schedule_update_day(i, request))
+                            #IF selected day not in month and truthy
+                        elif i not in schedules['employees'][emp_id][sel_year][sel_month] and i:
+                            #UPDATE month with selected day containing prepared request data
+                            schedules['employees'][emp_id][sel_year][sel_month].update({i:schedule_update_day(i, request)})
+                            #IF selected month not in schedule and truthy
+                    elif sel_month not in schedules['employees'][emp_id][sel_year] and sel_month:
+                            #UPDATE year with selected month containing selected day with prepared request data
+                        schedules['employees'][emp_id][sel_year].update({sel_month: { i: schedule_update_day(i, request) }})
+
+            #Display current month
+            else:
+                pass
+
+            #GENERATE schedule and SET month length if no value in quick schedule add.
+
             sel_month = int(request.form['selmonth'])
-            sel_day = int(request.form['day'])
-            updated_sched_data = schedule_update_day(sel_day, request)
-            #logger.append("day's value is {}".format(type(request.form['day'])))
+            month_len = monthrange(2018, sel_month)[1] + 1
 
-            if 'bulk_days' is not None and 'bulk_days' in request.form:
+            #Obtain hours worked value from fields that have those
 
-                bulk_days = int(request.form['bulk_days'])
+            for i in range(1, month_len):
+                hrs_worked_instance = "hours_worked_" + str(i)
+                if (hrs_worked_instance) in request.form and (request.form[hrs_worked_instance]):
+                    #logger.append("hours worked in day {}: {} . Type of value is {}".format(i, request.form[hrs_worked_instance], type(request.form[hrs_worked_instance]) ) )
+                    #Schedule should already be present in this case, no need to confirm
+                    sel_day = int(i)
+                    schedules['employees'][emp_id][2018][sel_month][sel_day].update({
+                        "hours_worked": int(request.form[hrs_worked_instance])
+                    })
+
+
+            if sel_month in schedules['employees'][emp_id][2018]: #IF sel_month is in schedules
+                sel_schedule = schedules['employees'][emp_id][2018][sel_month]
             else:
-
-                bulk_days = sel_day
-
-            #COMPARE if selected day is larger than "apply to" bulk days
-            if bulk_days < sel_day:
-
-                begin = bulk_days
-                end = sel_day
-            #SET selected day to be end range if "apply to" bulk days is smaller
-            else:
-                begin = sel_day
-                end = bulk_days
-
-            for i in range(begin, (end + 1)):
-
-                if sel_month in schedules['employees'][emp_id][sel_year]:
-                    #CHECK if selected day in month
-                    if i in schedules['employees'][emp_id][sel_year][sel_month]:
-                        #UPDATE selected day with prepared request data
-                        schedules['employees'][emp_id][sel_year][sel_month][i].update(schedule_update_day(i, request))
-                        #IF selected day not in month and truthy
-                    elif i not in schedules['employees'][emp_id][sel_year][sel_month] and i:
-                        #UPDATE month with selected day containing prepared request data
-                        schedules['employees'][emp_id][sel_year][sel_month].update({i:schedule_update_day(i, request)})
-                        #IF selected month not in schedule and truthy
-                elif sel_month not in schedules['employees'][emp_id][sel_year] and sel_month:
-                        #UPDATE year with selected month containing selected day with prepared request data
-                    schedules['employees'][emp_id][sel_year].update({sel_month: { i: schedule_update_day(i, request) }})
-
-        #Display current month
-        else:
-            pass
-
-        #GENERATE schedule and SET month length if no value in quick schedule add.
-
-        sel_month = int(request.form['selmonth'])
-        month_len = monthrange(2018, sel_month)[1] + 1
-
-        #Obtain hours worked value from fields that have those
-
-        for i in range(1, month_len):
-            hrs_worked_instance = "hours_worked_" + str(i)
-            if (hrs_worked_instance) in request.form and (request.form[hrs_worked_instance]):
-                #logger.append("hours worked in day {}: {} . Type of value is {}".format(i, request.form[hrs_worked_instance], type(request.form[hrs_worked_instance]) ) )
-                #Schedule should already be present in this case, no need to confirm
-                sel_day = int(i)
-                schedules['employees'][emp_id][2018][sel_month][sel_day].update({
-                    "hours_worked": int(request.form[hrs_worked_instance])
-                })
-
-
-        if sel_month in schedules['employees'][emp_id][2018]: #IF sel_month is in schedules
-            sel_schedule = schedules['employees'][emp_id][2018][sel_month]
-        else:
-            sel_schedule = {}
+                sel_schedule = {}
 
 
 
-        return render_template(
-            "scheduleinfo.html",
-            the_title="Schedule Info page",
-            emp = sel_employee,
-            sched = sel_schedule,
-            sel_month=sel_month,
-            month_len = month_len,
-            logger=logger
-        )
+            return render_template(
+                "scheduleinfo.html",
+                the_title="Schedule Info page",
+                emp = sel_employee,
+                sched = sel_schedule,
+                sel_month=sel_month,
+                month_len = month_len,
+                logger=logger
+            )
 
-
+        except:
+            return render_template(
+                "scheduleinfo.html",
+                the_title="Schedule Info page",
+                emp = sel_employee,
+                sched = sel_schedule,
+                sel_month = current_month,
+                month_len = month_len + 1
+            )
     if request.method == "GET":
         #DEFAULTS
         month_len = monthrange(2018, current_month)[1]
