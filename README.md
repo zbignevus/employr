@@ -20,13 +20,17 @@ If you have any further usage questions regarding the current prototype, please 
 
 <b>Recent changes:</b>
 
+2018.10.13
+  <i>
+  *Added Try/Exception to validate quick schedule values for day field.
+
 2018.10.10
 
 Time Worked:
   <i>
   *Fixed key error when trying to view time worked for days that exist but have no hours specified yet.
   </i>
-  
+
 2018.10.09
 
 Schedule Info:
@@ -43,4 +47,3 @@ Employee Details:
 
   <i>*Hourly wages can now be dynamically assigned to each employee
   </i>
-
