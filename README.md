@@ -21,9 +21,12 @@ If you have any further usage questions regarding the current prototype, please 
 <b>Recent changes:</b>
 
 2018.10.13
+
+Schedule Info:
+  <br/>
   <i>
   *Added Try/Exception to validate quick schedule values for day field.
-
+  </i>
 2018.10.10
 
 Time Worked:
