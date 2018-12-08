@@ -21,25 +21,20 @@ If you have any further usage questions regarding the current prototype, please 
 <b>Recent changes:</b>
 
 2018.10.13
-
-Schedule Info:
-  <br/>
   <i>
   *Added Try/Exception to validate quick schedule values for day field.
-  </i>
-  <br/>
+
 2018.10.10
-<br/>
+
 Time Worked:
-<br/>
   <i>
   *Fixed key error when trying to view time worked for days that exist but have no hours specified yet.
   </i>
-<br/>
+
 2018.10.09
-<br/>
+
 Schedule Info:
-<br/>
+
   <i>
   *Fixed error when clicking "Add Schedule" in the quick schedule tool.
   *Added Time Worked Window - this is where you can view and specify the hours an employee has worked.

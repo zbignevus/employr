@@ -10,18 +10,22 @@
 </form>
 
 <script>
+
+var start_date = new Date({{prior_date| safe}})
+var end_date = new Date({{current_date| safe}})
+
 $(function() {
   $('input[name="daterange"]').daterangepicker({
-    opens: 'left',
+    "opens": 'left',
     "showWeekNumbers": true,
     "maxSpan": {
         "days": 6
     },
-    "alwaysShowCalendars": true,
     "startDate": {{prior_date}},
-    "endDate": {{current_date}}
+    "endDate": {{current_date}},
+    "alwaysShowCalendars": true,
   }, function(start, end, label) {
-  console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
+  console.log('New date range selected: ' + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY') + ' (predefined range: ' + label + ')');
   });
 });
 </script>
@@ -35,11 +39,36 @@ $(function() {
                 <th>Hourly Wage</th>
                 <th>Hours Worked</th>
                 <th>Total Payroll</th>
-                {%for m in range(start_month, (end_month + 1) ) %}
-                  {%for d in range (start_day, (end_day+1) ) %}
-                  <th>{{start_month_abbr}}<br/>{{d}}</th>
-                  {% endfor %}
-                {% endfor %}
+                {%if start_year == end_year %}
+                  {%if start_day > end_day %}
+                      {%for old_month_day in range(old_month_start_day, old_month_end_day+1) %}
+                        <th>{{start_month_abbr}}<br/>{{old_month_day}}</th>
+                      {% endfor %}
+                      {%for new_month_day in range(new_month_start_day, new_month_end_day+1) %}
+                        <th>{{end_month_abbr}}<br/>{{new_month_day}}</th>
+                      {% endfor %}
+                  {%endif %}
+                  {%if start_day <= end_day %}
+                      {%for d in range(start_day, end_day+1)%}
+                        <th>{{end_month_abbr}}<br/>{{d}}</th>
+                      {% endfor %}
+                  {% endif %}
+                {% endif %}
+
+
+                {%if start_year < end_year %}
+                      {{old_month_start_day}}
+                      {%for old_month_day in range(old_month_start_day, old_month_end_day+1) %}
+                        <th>{{start_month_abbr}}<br/>{{old_month_day}}</th>
+                      {% endfor %}
+                      {%for new_month_day in range(new_month_start_day, new_month_end_day+1) %}
+                        <th>{{end_month_abbr}}<br/>{{new_month_day}}</th>
+                      {% endfor %}
+                {% endif %}
+
+
+
+
             </tr>
         </thead>
         <tbody>
@@ -62,13 +91,25 @@ $(function() {
         </tbody>
 
     </table>
-    {{err}}
+
+
 
 </div>
 
 {% endblock %}
 
 <!--
+
+
+<h1>Test values here:</h1>
+{%for item in err%}
+  <p>{{err}}</p>
+{%endfor %}
+<p> counter value before jumping off to new month: {{counter}} </p>
+<p> start day:{{start_day}}</p>
+<p> end day: {{end_day}} </p>
+<p> Month range: {{start_month}} {{end_month}}</p>
+<p>{{tw_day_hours}}</p>
 
 create loop for th
 have month converted to day through datetime
