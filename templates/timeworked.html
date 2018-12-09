@@ -39,32 +39,31 @@ $(function() {
                 <th>Hourly Wage</th>
                 <th>Hours Worked</th>
                 <th>Total Payroll</th>
-                {%if start_year == end_year %}
-                  {%if start_day > end_day %}
-                      {%for old_month_day in range(old_month_start_day, old_month_end_day+1) %}
-                        <th>{{start_month_abbr}}<br/>{{old_month_day}}</th>
-                      {% endfor %}
-                      {%for new_month_day in range(new_month_start_day, new_month_end_day+1) %}
-                        <th>{{end_month_abbr}}<br/>{{new_month_day}}</th>
-                      {% endfor %}
-                  {%endif %}
-                  {%if start_day <= end_day %}
-                      {%for d in range(start_day, end_day+1)%}
-                        <th>{{end_month_abbr}}<br/>{{d}}</th>
-                      {% endfor %}
+                {%if year_start == year_end %}
+                  {%if month_start == month_end %}
+                    {%for day in range(month_start_day_start, month_start_day_end+1) %}
+                      <th>{{month_start_abbr}}<br/>{{day}}</th>
+                    {% endfor %}
+                  {% endif %}
+                  {%if month_start < month_end %}
+                    {%for day in range(month_start_day_start, month_start_day_end+1) %}
+                      <th>{{month_start_abbr}}<br/>{{day}}</th>
+                    {% endfor %}
+                    {%for day in range(month_end_day_start, month_end_day_end+1) %}
+                      <th>{{month_end_abbr}}<br/>{{day}}</th>
+                    {% endfor %}
                   {% endif %}
                 {% endif %}
 
-
-                {%if start_year < end_year %}
-                      {{old_month_start_day}}
-                      {%for old_month_day in range(old_month_start_day, old_month_end_day+1) %}
-                        <th>{{start_month_abbr}}<br/>{{old_month_day}}</th>
-                      {% endfor %}
-                      {%for new_month_day in range(new_month_start_day, new_month_end_day+1) %}
-                        <th>{{end_month_abbr}}<br/>{{new_month_day}}</th>
-                      {% endfor %}
+                {%if year_start < year_end %}
+                  {%for day in range(month_start_day_start, month_start_day_end+1) %}
+                    <th>{{month_start_abbr}}<br/>{{day}}</th>
+                  {% endfor %}
+                  {%for day in range(month_end_day_start, month_end_day_end+1) %}
+                    <th>{{month_end_abbr}}<br/>{{day}}</th>
+                  {% endfor %}
                 {% endif %}
+
 
 
 

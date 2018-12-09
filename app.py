@@ -346,47 +346,17 @@ def show_time_worked_all() -> str:
 @app.route('/timeworked', methods=["GET", "POST"])
 def schedule_time_worked() -> str:
 
-    time_worked_all = {
-        'employees':{}
-    }
-
-
-    current_date = datetime.datetime.today().strftime("%m/%d/%Y")
-
-
-    old_month_start_day = 0
-    old_month_end_day = 0
-    new_month_start_day = 0
-    new_month_end_day = 0
 
     if request.method == "GET":
 
-        now = datetime.datetime.today()
+        #default week display
+        date_end = datetime.datetime.today()
+        date_start = date_end - datetime.timedelta(days= 6)
 
-        prior = datetime.datetime.today() - datetime.timedelta(days= 6)
-        prior_date = prior.strftime("%m/%d/%Y")
 
-
-        if prior.year < now.year:
-            start_year = prior.year
-        else:
-            start_year = now.year
-
-        if prior.month != now.month:
-            start_month = prior.month
-        else:
-            start_month = now.month
-
-        start_day = prior.day
-        start_month_abbr = calendar.month_abbr[start_month]
-
-        end_year = now.year
-        end_month = now.month
-        end_month_abbr = calendar.month_abbr[end_month]
-        end_day = now.day
-
-        start_month_range = monthrange(start_year, start_month)
-
+        #for calendar widget display
+        current_date = datetime.datetime.today().strftime("%m/%d/%Y")
+        prior_date = date_start.strftime("%m/%d/%Y")
 
     if request.method == "POST":
 
@@ -394,22 +364,32 @@ def schedule_time_worked() -> str:
             date_start = datetime.datetime.strptime(request.form['daterange'][0:10], "%m/%d/%Y")
             date_end = datetime.datetime.strptime(request.form['daterange'][13:23], "%m/%d/%Y")
 
-            start_year = date_start.year
-            end_year = date_end.year
-
-            start_month = date_start.month
-            start_month_abbr = calendar.month_abbr[start_month]
-            start_month_range = monthrange(start_year, start_month)
-
-            start_day = date_start.day
-            end_day = date_end.day
-
-            end_month = date_end.month
-            end_month_abbr = calendar.month_abbr[end_month]
-
-
+            #for calendar widget display
             current_date = date_end.strftime("%m/%d/%Y")
             prior_date = date_start.strftime("%m/%d/%Y")
+
+    year_start = date_start.year
+    year_end = date_end.year
+
+    month_start = date_start.month
+    month_start_abbr = calendar.month_abbr[month_start]
+    month_start_range = monthrange(year_start, month_start)
+
+    month_start_day_start = date_start.day
+
+    month_end = date_end.month
+
+    month_start_day_end = date_end.day if month_start == month_end else (month_start_day_start + (month_start_range[1] - month_start_day_start))
+
+    month_end_abbr = calendar.month_abbr[month_end]
+    month_end_range = monthrange(year_end, month_end)
+
+    month_end_day_start = date_start.day if month_start == month_end else 1
+    month_end_day_end = date_end.day
+
+    time_worked_all = {
+        'employees':{}
+    }
 
 
     for records, employee_ids in employees.items():
@@ -441,90 +421,17 @@ def schedule_time_worked() -> str:
                 )
                 #Generate time_worked_all based on data provided
 
-                time_worked_all['employees'][employee_id]['time_worked'].update({start_year:{}, end_year:{}} or {start_year:{}, end_year:{}})
-                time_worked_all['employees'][employee_id]['time_worked'][start_year].update({start_month:{}} or {start_month:{}})
-                time_worked_all['employees'][employee_id]['time_worked'][end_year].update({end_month:{}} or {end_month:{}})
-
-                if start_year < end_year:
-
-                    old_year = start_year
-
-                    old_month_start = start_month
-                    old_month_range = start_month_range
-                    old_month_start_day = start_day
-                    old_month_end_day = old_month_start_day + (start_month_range[1] - old_month_start_day)
-
-                    new_month_start_day = 1
-
-                    new_year = end_year
-                    new_month_start = 1
-                    new_month_end_day = end_day
+                time_worked_all['employees'][employee_id]['time_worked'].update({year_start:{}, year_end:{}} or {year_start:{}, year_end:{}})
+                time_worked_all['employees'][employee_id]['time_worked'][year_start].update({month_start:{}} or {month_start:{}})
+                time_worked_all['employees'][employee_id]['time_worked'][year_end].update({month_end:{}} or {month_end:{}})
 
 
-                    #generate schedule for old year month
-                    generate_days_schedule(
-                        old_month_start_day,
-                        old_month_end_day,
-                        schedules,
-                        time_worked_all,hourly_wage,
-                        employee_id,
-                        old_year,
-                        old_month_start)
+                #generate schedule for previous month
+                generate_days_schedule(month_start_day_start,month_start_day_end,schedules,time_worked_all,hourly_wage,employee_id,year_start,month_start)
 
-                    #generate schedule for new year month
-                    generate_days_schedule(
-                        new_month_start_day,
-                        new_month_end_day,
-                        schedules,
-                        time_worked_all,hourly_wage,
-                        employee_id,
-                        new_year,
-                        new_month_start)
+                #generate schedule for next month
+                generate_days_schedule(month_end_day_start,month_end_day_end,schedules,time_worked_all,hourly_wage,employee_id,year_end,month_end)
 
-                if start_year == end_year:
-
-                    if start_month == end_month:
-                        generate_days_schedule(
-                            start_day,
-                            end_day,
-                            schedules,
-                            time_worked_all,
-                            hourly_wage,
-                            employee_id,
-                            start_year,
-                            start_month)
-
-                    elif start_month < end_month:
-
-                        old_month_start_day = start_day
-                        old_month_end_day = old_month_start_day + (start_month_range[1] - old_month_start_day)
-                        new_month_start_day = 1
-                        new_month_end_day = end_day
-
-
-
-
-                        generate_days_schedule(
-                            old_month_start_day,
-                            old_month_end_day,
-                            schedules,
-                            time_worked_all,
-                            hourly_wage,
-                            employee_id,
-                            start_year,
-                            start_month)
-
-                        generate_days_schedule(
-                            new_month_start_day,
-                            new_month_end_day,
-                            schedules,
-                            time_worked_all,
-                            hourly_wage,
-                            employee_id,
-                            start_year,
-                            end_month)
-                else:
-                    pass
 
             else:
                 pass
@@ -532,27 +439,25 @@ def schedule_time_worked() -> str:
 
 
 
+
     return render_template('timeworked.html',
-                           start_month_range=start_month_range,
-                           old_month_start_day = old_month_start_day,
-                           old_month_end_day = old_month_end_day,
-                           new_month_start_day = new_month_start_day,
-                           new_month_end_day = new_month_end_day,
+                           year_start= year_start,
+                           month_start= month_start,
+                           month_start_abbr = month_start_abbr,
+                           month_start_day_start = month_start_day_start,
+                           month_start_day_end = month_start_day_end,
+                           year_end = year_end,
+                           month_end = month_end,
+                           month_end_abbr = month_end_abbr,
+                           month_end_day_start = month_end_day_start,
+                           month_end_day_end = month_end_day_end,
+                           schedules = schedules,
+                           hourly_wage = hourly_wage,
                            time_worked_all = time_worked_all,
                            the_title="Time Worked Page",
                            current_date = current_date,
                            prior_date = prior_date,
-                           start_month= start_month,
-                           end_month=end_month,
-                           start_day= start_day,
-                           start_year=start_year,
-                           end_year=end_year,
-                           end_day = end_day,
-                           start_month_abbr = start_month_abbr,
-                           end_month_abbr = end_month_abbr
                            )
-
-
 
 
 
