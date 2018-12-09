@@ -20,15 +20,21 @@ If you have any further usage questions regarding the current prototype, please 
 
 <b>Recent changes:</b>
 
+2018.12.9
+Time Worked
+<i>
+Deduplicated code in decorator function.
+</i>
+
 2018.12.8
 Time Worked
 <i>
   Fixed schedules display with transitioning months and year.
-
+</i>
 2018.10.13
   <i>
   *Added Try/Exception to validate quick schedule values for day field.
-
+  </i>
 2018.10.10
 
 Time Worked:
